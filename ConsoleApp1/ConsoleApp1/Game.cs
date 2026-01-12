@@ -63,9 +63,7 @@ namespace Sokoban_class
             moveCount = 0;
             curGoalCount = 0;
             goalCount = 1;
-            obstacle = random.Next(3, 6);
-
-            //goalCount = random.Next(3, 10);
+            obstacle = random.Next(5, 10);
 
             boxMap = new Map();
             playerMap = new Map();
@@ -76,6 +74,9 @@ namespace Sokoban_class
             boxMap.Init();     // 맵 초기화
             playerMap.Init();
             boxMap.SpawnPlayer(player); // 플레이어 초기화
+
+            boxMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, Define.EMPTY);
+            playerMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, Define.PLAYER);
 
             // 오브젝트 초기화
             for (int i = 0; i < goalCount; i++)

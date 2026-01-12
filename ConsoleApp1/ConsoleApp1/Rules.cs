@@ -84,7 +84,7 @@ namespace Sokoban_class
             if (canMove)
             {
                 // 원래 있던 자리 처리 (골이었으면 골 복구, 아니면 빈칸)
-                playerMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, onGoal ? Define.GOAL : Define.OBSTACLE);
+                playerMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, onGoal ? Define.GOAL : Define.EMPTY);
 
                 // 이동한 자리가 골인지 기억
                 if (playerMap.GetCell(nextPPos.X, nextPPos.Y) == Define.GOAL)
@@ -98,32 +98,7 @@ namespace Sokoban_class
 
                 return Result.Success(currentGoalCount);
             }
-            return Result.Fail();          
+            return Result.Fail();
         }
     }
 }
-/*
-int goalCount = 0;
-
-// 움직임.
-if (onGoal)
-{
-    onGoal = false;
-    boxMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, Define.GOAL);
-    playerMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, Define.GOAL);
-}
-else
-{
-    boxMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, Define.EMPTY);
-    playerMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, Define.EMPTY);
-}
-
-if (playerMap.GetCell(nextPos.X, nextPos.Y) == Define.GOAL)
-    onGoal = true;
-
-playerMap.SetCell(nextPos.X, nextPos.Y, Define.PLAYER);     
-
-player.Move(nextPos);
-
-return Result.Success(goalCount);
-*/
