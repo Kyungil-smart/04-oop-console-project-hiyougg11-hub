@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,8 +13,6 @@ namespace Sokoban_class
         public static readonly char EMPTY = ' ';
         public static readonly char BOX_ON_GOAL = '@';
         public static readonly char OBSTACLE = '■';
-        // public static readonly char GOAL_ON_PLAYER = '!';
-        // 되긴 되는데 마음대로 안되네
 
         public struct Position
         {

@@ -1,5 +1,7 @@
 ﻿using System;
+
 using System.Collections.Generic;
+
 using System.Text;
 
 namespace Sokoban_class
@@ -23,7 +25,6 @@ namespace Sokoban_class
         public void Run()
         {
             Init();
-
             printText.PrintGuide();
 
             while (true)
@@ -42,7 +43,6 @@ namespace Sokoban_class
 
                 // 플레이어 이동 (Core)
                 ConsoleKey inputKey = player.UserInput(); // 입력 들어왔네. WASD
-
                 if (inputKey == ConsoleKey.Q)
                     break;
 
@@ -55,7 +55,6 @@ namespace Sokoban_class
                 if (result.GoalCount != 0)
                     curGoalCount += 1;
             }
-
             Console.WriteLine("게임이 종료됐습니다!");
         }
 
@@ -65,6 +64,7 @@ namespace Sokoban_class
             curGoalCount = 0;
             goalCount = 1;
             obstacle = random.Next(3, 6);
+
             //goalCount = random.Next(3, 10);
 
             boxMap = new Map();
@@ -74,6 +74,7 @@ namespace Sokoban_class
             printText = new PrintText();        // 게임 가이드랑, 게임 조건
 
             boxMap.Init();     // 맵 초기화
+            playerMap.Init();
             boxMap.SpawnPlayer(player); // 플레이어 초기화
 
             // 오브젝트 초기화
@@ -81,44 +82,12 @@ namespace Sokoban_class
             {
                 boxMap.SpawnObject(Define.BOX);
                 boxMap.SpawnObject(Define.GOAL);
-            }      
-            
+            }
+
             for (int i = 0; i < obstacle; i++)
             {
                 boxMap.SpawnObject(Define.OBSTACLE);
-                // playerMap.SpawnObject(Define.OBSTACLE);
-            }
-
-            // 장애물이 만들어진 boxMap을 playerMap에 복사
-            playerMap.CopyPrintMap(boxMap);
-        }
-
-        public void RenderCombinedMap()
-        {
-            Console.SetCursorPosition(0, 4);
-
-            for (int y = 0; y < 20; y++)
-            {
-                for  (int x = 0; x < 10; x++)
-                {
-                    char playerObj = playerMap.GetCell(x, y);
-                    char boxObj = boxMap.GetCell(x, y);
-
-                    if (playerObj == Define.PLAYER)
-                        Console.Write(Define.PLAYER);
-
-                    else if (boxObj == Define.BOX || boxObj == Define.BOX_ON_GOAL)
-                        Console.Write(boxObj);
-
-                    else if (boxObj == Define.GOAL)
-                        Console.Write(Define.GOAL);
-
-                    else if (boxObj == Define.WALL || boxObj == Define.OBSTACLE)
-                        Console.Write(boxObj);
-
-                    else Console.Write(Define.EMPTY);
-                }
-                Console.WriteLine();
+                playerMap.SpawnObject(Define.OBSTACLE);
             }
         }
     }

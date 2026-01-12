@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Sokoban_class
 {
-    // 맵(오브젝트) 초기화/출력
     internal class Map
     {
         readonly Random random = new Random();
@@ -13,12 +11,18 @@ namespace Sokoban_class
         int width;
         int height;
 
+        // [추가] 박스들의 위치를 관리할 리스트
+        public List<Define.Position> BoxList = new List<Define.Position>();
+
         public void Init()
         {
             width = 10;
             height = 20;
 
             map = new char[width, height];
+
+            // [추가] 리스트 초기화
+            BoxList.Clear();
 
             for (int i = 0; i < map.GetLength(0); i++)
             {
@@ -32,7 +36,6 @@ namespace Sokoban_class
             }
         }
 
-
         public void PrintMap()
         {
             for (int i = 0; i < map.GetLength(0); i++)
@@ -41,7 +44,6 @@ namespace Sokoban_class
                 {
                     Console.Write(map[i, j]);
                 }
-
                 Console.WriteLine();
             }
         }
@@ -60,6 +62,12 @@ namespace Sokoban_class
         {
             SpawnEmptyCell(out int x, out int y);
             SetCell(x, y, objChar);
+
+            // [추가] 박스라면 리스트에 위치 저장
+            if (objChar == Define.BOX)
+            {
+                BoxList.Add(new Define.Position() { X = x, Y = y });
+            }
         }
 
         void SpawnEmptyCell(out int posX, out int posY)
@@ -74,25 +82,26 @@ namespace Sokoban_class
             }
         }
 
-        public void CopyPrintMap(Map copyMap)
+        // [추가] 박스 이동 후, 맵 배열(char[,])에 그림을 다시 그려주는 함수
+        public void UpdateBoxMapVisuals()
         {
-            width = 10;
-            height = 20;
-
-            map = new char[width, height];
-
-            for (int i = 0; i < map.GetLength(0); i++)
+            // 1. 맵 전체에서 기존 박스 그림 지우기 (빈칸 or 골)
+            for (int i = 0; i < width; i++)
             {
-                for (int j = 0; j < map.GetLength(1); j++)
+                for (int j = 0; j < height; j++)
                 {
-                    char _copyMap = copyMap.GetCell(i, j);
-
-                    // 벽이나 장애물인 경우에만 맵1에 복사
-                    if (_copyMap == Define.WALL || _copyMap == Define.OBSTACLE)
-                        this.map[i, j] = _copyMap;
-                    else
-                        this.map[i, j] = Define.EMPTY; // 나머지는 빈칸
+                    if (map[i, j] == Define.BOX) map[i, j] = Define.EMPTY;
+                    if (map[i, j] == Define.BOX_ON_GOAL) map[i, j] = Define.GOAL;
                 }
+            }
+
+            // 2. 리스트에 있는 좌표에 박스 다시 그리기
+            foreach (var pos in BoxList)
+            {
+                if (map[pos.X, pos.Y] == Define.GOAL)
+                    map[pos.X, pos.Y] = Define.BOX_ON_GOAL;
+                else
+                    map[pos.X, pos.Y] = Define.BOX;
             }
         }
     }
