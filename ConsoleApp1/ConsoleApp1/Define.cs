@@ -20,6 +20,7 @@ namespace Sokoban_class
             public int Y { get; set; }
         }
 
+        /*
         public enum eMoveDir
         {
             UP,
@@ -29,5 +30,6 @@ namespace Sokoban_class
 
             NONE
         }
+        */
     }
 }

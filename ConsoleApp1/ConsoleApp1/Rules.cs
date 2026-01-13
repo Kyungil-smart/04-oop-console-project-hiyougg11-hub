@@ -25,7 +25,7 @@ namespace Sokoban_class
             // 1. 방향 설정
             int dx = 0;
             int dy = 0;
-
+            
             switch (inputKey)
             {
                 case ConsoleKey.W: dx = -1; break;
@@ -36,7 +36,6 @@ namespace Sokoban_class
             }
 
             // 박스 로직
-
             for (int i = 0; i < boxMap.BoxList.Count; i++)
             {
                 Define.Position currentPos = boxMap.BoxList[i];
@@ -55,10 +54,10 @@ namespace Sokoban_class
             boxMap.UpdateBoxMapVisuals();
 
             int currentGoalCount = 0;
-
+            // 박스가 골에 들어가면 골 카운트 plus
             foreach (var box in boxMap.BoxList)
             {
-                if (boxMap.GetCell(box.X, box.Y) == Define.BOX_ON_GOAL) // Update에서 갱신됨
+                if (boxMap.GetCell(box.X, box.Y) == Define.BOX_ON_GOAL)
                     currentGoalCount++;
             }
 
@@ -79,14 +78,12 @@ namespace Sokoban_class
 
             if (target_playerMap == Define.WALL || target_playerMap == Define.BOX_ON_GOAL || target_playerMap == Define.OBSTACLE)
                 canMove = false;
-            //return Result.Fail();
 
             if (canMove)
             {
                 // 원래 있던 자리 처리 (골이었으면 골 복구, 아니면 빈칸)
                 playerMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, onGoal ? Define.GOAL : Define.EMPTY);
 
-                // 이동한 자리가 골인지 기억
                 if (playerMap.GetCell(nextPPos.X, nextPPos.Y) == Define.GOAL)
                     onGoal = true;
                 else

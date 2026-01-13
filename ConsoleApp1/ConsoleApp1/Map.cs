@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Sokoban_class
+﻿namespace Sokoban_class
 {
     internal class Map
     {
@@ -11,7 +8,7 @@ namespace Sokoban_class
         int width;
         int height;
 
-        // [추가] 박스들의 위치를 관리할 리스트
+        // 박스를 리스트에 저장
         public List<Define.Position> BoxList = new List<Define.Position>();
 
         public void Init()
@@ -20,8 +17,6 @@ namespace Sokoban_class
             height = 20;
 
             map = new char[width, height];
-
-            // [추가] 리스트 초기화
             BoxList.Clear();
 
             for (int i = 0; i < map.GetLength(0); i++)
@@ -36,6 +31,7 @@ namespace Sokoban_class
             }
         }
 
+        // 맵 출력
         public void PrintMap()
         {
             for (int i = 0; i < map.GetLength(0); i++)
@@ -48,6 +44,7 @@ namespace Sokoban_class
             }
         }
 
+        //중요
         public char GetCell(int x, int y) => map[x, y];
         public void SetCell(int x, int y, char value) => map[x, y] = value;
 
@@ -63,7 +60,7 @@ namespace Sokoban_class
             SpawnEmptyCell(out int x, out int y);
             SetCell(x, y, objChar);
 
-            // [추가] 박스라면 리스트에 위치 저장
+            // 오브젝트중에 박스가 있으면 리스트에 추가
             if (objChar == Define.BOX)
             {
                 BoxList.Add(new Define.Position() { X = x, Y = y });
@@ -82,7 +79,7 @@ namespace Sokoban_class
             }
         }
 
-        // [추가] 박스 이동 후, 맵 배열(char[,])에 그림을 다시 그려주는 함수
+        // 박스 이동 후, 맵 배열(char[,])에 그림을 다시 그려주는 함수
         public void UpdateBoxMapVisuals()
         {
             // 1. 맵 전체에서 기존 박스 그림 지우기 (빈칸 or 골)

@@ -65,15 +65,16 @@ namespace Sokoban_class
             goalCount = 1;
             obstacle = random.Next(5, 10);
 
+
             boxMap = new Map();
             playerMap = new Map();
             player = new Player();
             rules = new Rules(player, boxMap, playerMap);
-            printText = new PrintText();        // 게임 가이드랑, 게임 조건
+            printText = new PrintText();
 
-            boxMap.Init();     // 맵 초기화
+            boxMap.Init();
             playerMap.Init();
-            boxMap.SpawnPlayer(player); // 플레이어 초기화
+            boxMap.SpawnPlayer(player);
 
             boxMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, Define.EMPTY);
             playerMap.SetCell(player.PlayerPos.X, player.PlayerPos.Y, Define.PLAYER);
